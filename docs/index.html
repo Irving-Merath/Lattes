@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pesquisa no RJ — dados abertos</title>
+<meta name="description" content="Pesquisadores, laboratórios e linhas de pesquisa do estado do Rio de Janeiro, com filtros e mapa. Dados abertos, uso não comercial.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header class="topo">
+  <div>
+    <h1>Pesquisa no RJ</h1>
+    <p class="sub">Pesquisadores, laboratórios e linhas de pesquisa do estado do Rio de Janeiro</p>
+  </div>
+  <p class="totais" id="totais">Carregando dados…</p>
+</header>
+
+<main class="layout">
+  <aside class="filtros" aria-label="Filtros">
+    <h2>Filtros</h2>
+    <label>Busca por nome
+      <input type="search" id="f-texto" placeholder="Pesquisador, instituição ou tema">
+    </label>
+    <label>Grande área
+      <select id="f-grande"><option value="">Todas</option></select>
+    </label>
+    <label>Área
+      <select id="f-area"><option value="">Todas</option></select>
+    </label>
+    <label>Linha de pesquisa
+      <input type="search" id="f-linha" placeholder="Ex.: dengue, petróleo, IA" list="lista-linhas">
+      <datalist id="lista-linhas"></datalist>
+    </label>
+    <label>Cidade
+      <select id="f-cidade"><option value="">Todas</option></select>
+    </label>
+    <label>Instituição
+      <select id="f-inst"><option value="">Todas</option></select>
+    </label>
+    <label>Tipo de instituição
+      <select id="f-tipo"><option value="">Todos</option></select>
+    </label>
+    <label class="check"><input type="checkbox" id="f-lab"> Só laboratórios / institutos</label>
+    <label>Mínimo de publicações
+      <input type="number" id="f-min" min="0" step="1" value="0">
+    </label>
+    <button type="button" id="limpar">Limpar filtros</button>
+  </aside>
+
+  <section class="conteudo">
+    <nav class="abas" role="tablist">
+      <button role="tab" data-aba="mapa" aria-selected="true">Mapa</button>
+      <button role="tab" data-aba="pesquisadores" aria-selected="false">Pesquisadores</button>
+      <button role="tab" data-aba="instituicoes" aria-selected="false">Instituições e laboratórios</button>
+      <button role="tab" data-aba="linhas" aria-selected="false">Linhas de pesquisa</button>
+    </nav>
+
+    <div class="painel" id="aba-mapa">
+      <div id="mapa" aria-label="Mapa das instituições do RJ"></div>
+      <p class="nota">Cada círculo é uma instituição; o tamanho indica quantos pesquisadores atendem aos filtros.</p>
+    </div>
+
+    <div class="painel" id="aba-pesquisadores" hidden>
+      <div class="barra">
+        <span id="n-pesq"></span>
+        <button type="button" id="baixar">Baixar CSV</button>
+      </div>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr>
+            <th data-ord="n">Nome</th><th>Instituição</th><th>Linhas de pesquisa</th>
+            <th data-ord="p" class="num">Publicações</th><th data-ord="c" class="num">Citações</th>
+            <th data-ord="h" class="num">Índice h</th><th>Links</th>
+          </tr></thead>
+          <tbody id="t-pesq"></tbody>
+        </table>
+      </div>
+      <div class="paginas" id="pag-pesq"></div>
+    </div>
+
+    <div class="painel" id="aba-instituicoes" hidden>
+      <div class="barra"><span id="n-inst"></span></div>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr>
+            <th>Nome</th><th>Tipo</th><th>Cidade</th><th class="num">Pesquisadores</th><th>Principais linhas</th>
+          </tr></thead>
+          <tbody id="t-inst"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="painel" id="aba-linhas" hidden>
+      <div class="barra"><span id="n-linhas"></span></div>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr><th>Linha de pesquisa</th><th>Área</th><th>Grande área</th><th class="num">Pesquisadores</th></tr></thead>
+          <tbody id="t-linhas"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p>Projeto <a href="https://github.com/Irving-Merath/Lattes">Irving-Merath/Lattes</a> ·
+    Licença <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.pt-br">CC BY-NC 4.0</a>:
+    uso livre e gratuito, <strong>proibido uso comercial</strong>, cite este repositório.</p>
+  <p id="fontes">Fontes: <a href="https://openalex.org">OpenAlex</a> (CC0) e currículos Lattes/CNPq quando disponíveis.
+    Nomes das linhas do OpenAlex estão em inglês, como na fonte.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
