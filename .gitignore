@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+# Currículos brutos do Extrator Lattes contêm dados pessoais (CPF, endereço etc.).
+# Não publique os XMLs: só os dados processados em docs/dados/.
+lattes_xml/
+*.zip
